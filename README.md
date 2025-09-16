@@ -1,59 +1,83 @@
-# Alias Router Pro (Chrome Extension, MV3)
+# Alias Router Pro — Omnibox Shortcuts for Chrome
 
-**Make aliases for everything** you type after `go` in Chrome's Omnibox.
+<img src="icon.png" width="96" alt="Alias Router Pro icon" align="right" />
 
-## Adding a New Alias
+**Alias Router Pro** is a minimal Chrome extension that lets you open any URL with short aliases.  
+Type `go` + Space in the address bar, then your alias → instantly route to the right place.
 
-1. Open the extension’s **Options** page:
-   - `chrome://extensions` → **Details** → **Extension options**
-   - or click the puzzle-piece icon → right-click Alias Router Pro → **Options**.
-2. Fill out:
-   - **Display name:** e.g. `Tek tickets`
-   - **Type:** `prefix`, `tokens`, `regex`, or `exact`
-   - **Pattern & Template:**
-     - **Prefix Example:**
-       Pattern: `tek-`
-       Template: `https://example.com/tek-{*}`  
-       Usage: `go tek-234` → opens `https://example.com/tek-234`
-     - **Tokens Example:**  
-       Pattern: `gh :owner :repo pr :num`  
-       Template: `https://github.com/{owner}/{repo}/pull/{num}`  
-       Usage: `go gh myorg site pr 123`
-     - **Regex Example:**  
-       Pattern: `^JIRA-(\d+)$`  
-       Template: `https://jira.example.com/browse/JIRA-$1`  
-       Usage: `go JIRA-456`
-     - **Exact Example:**  
-       Pattern: `docs`  
-       Template: `https://docs.example.com`
-   - **Open in:** Choose current tab or new tab.
-   - Click **Save Alias**.
-3. Use **Export/Import JSON** to back up or restore aliases.
-4. Optional: Set a **Default template** (e.g., `https://google.com/search?q={q}`) for unmatched inputs.
+---
 
-## Using Aliases
+## ✨ Features
 
-- Type `go` + Space in the address bar followed by your alias.  
-  Examples:
-  - `go tek-234`
-  - `go gh myorg site pr 123`
-  - `go JIRA-456`
-- Press **Enter** → Chrome opens the mapped URL(s).
+- 🔑 **Omnibox keyword**: `go`
+- 🎯 **Alias types**:
+  - **Exact** → `docs` → `https://docs.example.com`
+  - **Prefix** → `tek-234` → `https://example.com/tek-234`
+  - **Tokens** → `gh :owner :repo pr :num` → `https://github.com/{owner}/{repo}/pull/{num}`
+  - **Regex** → `^JIRA-(\d+)$` → `https://jira.example.com/browse/JIRA-$1`
+- 📑 **Multi-URL templates** (open several tabs at once)
+- 🖱️ **Right-click context menu** → “Open as alias”
+- 🔄 **Import/Export JSON** for backup
+- 🖥️ **Minimal popup UI** to add, edit, and delete aliases
+- 🌐 Works offline, all settings stored locally with `chrome.storage.sync`
 
-## Highlights
+---
 
-- Alias types: **exact**, **tokens**, **prefix**, **regex**
-- **Tokens**: Human-friendly patterns like `gh :owner :repo pr :num` → `https://github.com/{owner}/{repo}/pull/{num}`
-- Open **multiple URLs** from one alias (newline or ` | `)
-- Per-alias **open in**: current tab / new foreground / new background
-- **Fallback** template when nothing matches (e.g., `https://google.com/search?q={q}`)
-- Import/Export JSON, context menu: “Open as alias”
+## 🖼️ Screenshots
 
-## Usage
+| Popup | Options |
+|-------|---------|
+| ![Popup](screenshots/popup.png) | ![Options](screenshots/options.png)
 
-- In the URL bar type: `go` + Space + your alias.
-- Examples:
-  - **exact**: pattern `docs` → template `https://docs.example.com`
-  - **prefix**: pattern `tek-` → template `https://example.com/tek-{*}` → `go tek-234`
-  - **regex**: pattern `^JIRA-(\d+)$` → template `https://jira.example.com/browse/JIRA-$1`
-  - **tokens**: pattern `gh :owner :repo pr :num` → template `https://github.com/{owner}/{repo}/pull/{num}` → `go gh myorg site pr 123`
+---
+
+## 🚀 Installation
+
+### From Chrome Web Store (recommended)
+
+👉 *(Link will go here after approval)*
+
+### Manual (Developer mode)
+
+1. Clone this repo
+2. Go to `chrome://extensions` in Chrome.
+3. Enable **Developer mode** (top-right).
+4. Click **Load unpacked** and select the project folder.
+5. Done! Type `go` + Space in the address bar to use aliases.
+
+---
+
+## 🛠️ Development
+
+- Manifest V3
+- Vanilla JavaScript + HTML + CSS
+- Data stored in `chrome.storage.sync`
+
+### Build
+
+No build step required. Just zip the folder contents for publishing:
+
+```bash
+zip -r alias-router-pro.zip ./*
+```
+
+---
+
+## 📄 Privacy
+
+Alias Router Pro does not collect or share any personal data.  
+Aliases and settings are stored locally using Chrome’s `chrome.storage.sync`.  
+See [Privacy Policy](https://your-domain.com/privacy-policy.html) for details.
+
+---
+
+## 📨 Contact
+
+Created by [Mohsen Fallahnejad](https://themohsen.me)  
+📧 <support@themohsen.me>
+
+---
+
+## ⭐ Contribute
+
+Pull requests welcome! If you have ideas for improvements, please open an issue or start a discussion.
