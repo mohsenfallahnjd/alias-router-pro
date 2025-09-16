@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Alias Router Pro — Minimal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      width: 360px;
+      margin: 0;
+      padding: 12px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: #fff;
+      color: #111;
+      font-size: 14px;
+    }
+
+    h1 {
+      font-size: 15px;
+      margin: 0 0 10px;
+      font-weight: 600;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font: inherit;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 6px 8px;
+      width: 100%;
+      box-sizing: border-box;
+      background: #fff;
+    }
+
+    textarea {
+      margin-top: 4px;
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    button {
+      cursor: pointer;
+      background: #fff;
+    }
+
+    button.primary {
+      background: #111;
+      color: #fff;
+      border: none;
+    }
+
+    .row {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .row-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .list {
+      border: 1px solid #eee;
+      border-radius: 6px;
+      max-height: 220px;
+      overflow: auto;
+      margin-top: 8px;
+    }
+
+    .item {
+      padding: 6px 8px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #555;
+    }
+
+    .actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .muted {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Alias Router Pro</h1>
+
+  <div class="row row-2">
+    <input id="quickInput" placeholder="Try: tek-234" />
+    <button id="quickOpen" class="primary">Open</button>
+  </div>
+
+  <div class="muted">Manage aliases:</div>
+  <div class="row row-2">
+    <input id="name" placeholder="Name" />
+    <select id="type">
+      <option value="tokens">tokens</option>
+      <option value="prefix">prefix</option>
+      <option value="regex">regex</option>
+      <option value="exact">exact</option>
+    </select>
+  </div>
+  <input id="pattern" placeholder="Pattern" />
+  <textarea id="template" placeholder="Template URL(s)"></textarea>
+  <div class="row row-2">
+    <select id="disposition">
+      <option value="currentTab">current tab</option>
+      <option value="newForegroundTab">new tab</option>
+      <option value="newBackgroundTab">background tab</option>
+    </select>
+    <select id="enabled">
+      <option value="true">enabled</option>
+      <option value="false">disabled</option>
+    </select>
+  </div>
+  <div class="toolbar">
+    <button id="save" class="primary">Save</button>
+    <button id="reset">Reset</button>
+    <button id="delete">Delete</button>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+
+</html>

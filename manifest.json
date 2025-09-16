@@ -1,0 +1,20 @@
+{
+	"name": "Alias Router Pro (Omnibox)",
+	"description": "Powerful omnibox aliases: exact, tokens, prefix, regex, multi-URL, import/export.",
+	"version": "1.0.0",
+	"manifest_version": 3,
+	"omnibox": { "keyword": "go" },
+	"action": {
+		"default_title": "Alias Router Pro",
+		"default_popup": "popup.html"
+	},
+	"options_page": "options.html",
+	"permissions": ["storage", "tabs", "contextMenus", "omnibox"],
+	"host_permissions": ["<all_urls>"],
+	"background": { "service_worker": "service_worker.js", "type": "module" },
+	"icons": {
+		"16": "icon.png",
+		"48": "icon.png",
+		"128": "icon.png"
+	}
+}

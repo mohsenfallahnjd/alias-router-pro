@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Alias Router Pro — Options</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    fieldset {
+      border: 1px solid #ddd;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+
+    input,
+    select,
+    textarea {
+      flex: 1;
+      padding: 8px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 8px;
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .row {
+      /* display: grid;
+      grid-template-columns: 1fr 1fr; */
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .row>div {
+      flex: 1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #eee;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .actions button {
+      margin-right: 6px;
+    }
+
+    .muted {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: #f2f2f2;
+      margin-left: 6px;
+      font-size: 0.75rem;
+    }
+
+    .topbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    code {
+      background: #f7f7f7;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <h1>Alias Router Pro — Options</h1>
+    <span class="muted">Omnibox keyword <strong>go</strong>. Example: <code>go gh myorg myrepo pr 123</code></span>
+  </div>
+
+  <fieldset>
+    <legend>Add / Edit Alias</legend>
+    <div class="row">
+      <div>
+        <label>Display name
+          <input id="name" placeholder="GitHub PR" />
+        </label>
+      </div>
+      <div>
+        <label>Type
+          <select id="type">
+            <option value="exact">exact</option>
+            <option value="tokens">tokens</option>
+            <option value="prefix">prefix</option>
+            <option value="regex">regex</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <label>Pattern
+      <input id="pattern"
+        placeholder='exact: tek-234 | tokens: gh :owner :repo pr :num | prefix: tek- | regex: ^tek-(\\w+)$' />
+    </label>
+    <label>URL template (multi-URL: put each on a new line or use " | ")
+      <textarea id="template" rows="3"
+        placeholder='https://example.com/tek-{*}  or  https://github.com/{owner}/{repo}/pull/{num}'></textarea>
+    </label>
+    <div class="row">
+      <div>
+        <label>Enabled
+          <select id="enabled">
+            <option value="true">true</option>
+            <option value="false">false</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>Open in
+          <select id="disposition">
+            <option value="currentTab">current tab</option>
+            <option value="newForegroundTab">new tab (foreground)</option>
+            <option value="newBackgroundTab">new tab (background)</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <button id="save">Save Alias</button>
+    <button id="reset">Reset Form</button>
+    <div class="muted">Tokens: use <code>:name</code> in pattern and <code>{name}</code> in template. Remainder of input
+      is <code>{rest}</code>/<code>{q}</code>.</div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Aliases</legend>
+    <div>
+      <button id="export">Export JSON</button>
+      <label>Import JSON
+        <input type="file" id="importFile" accept="application/json" />
+        <button id="importBtn">Import</button>
+      </label>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Pattern</th>
+          <th>Template</th>
+          <th>Open</th>
+          <th>Enabled</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </fieldset>
+
+  <fieldset>
+    <legend>Defaults</legend>
+    <div class="row">
+      <div>
+        <label>Default template
+          <input id="defaultTemplate" placeholder="https://google.com/search?q={q}" />
+        </label>
+      </div>
+      <div>
+        <label>Default open in
+          <select id="defaultDisposition">
+            <option value="currentTab">current tab</option>
+            <option value="newForegroundTab">new tab (foreground)</option>
+            <option value="newBackgroundTab">new tab (background)</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <button id="saveSettings">Save Defaults</button>
+  </fieldset>
+
+  <script src="options.js" type="module"></script>
+</body>
+
+</html>
