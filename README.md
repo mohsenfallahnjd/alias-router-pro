@@ -67,7 +67,7 @@ zip -r alias-router-pro.zip ./*
 
 Alias Router Pro does not collect or share any personal data.  
 Aliases and settings are stored locally using Chrome’s `chrome.storage.sync`.  
-See [Privacy Policy](https://your-domain.com/privacy-policy.html) for details.
+See [Privacy Policy](./privacy-policy.md) for details.
 
 ---
 

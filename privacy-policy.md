@@ -12,4 +12,4 @@ Alias Router Pro does not collect, transmit, or share any personal data.
 
 Removing the extension or clearing Chrome’s extension storage deletes all saved aliases and settings.
 
-If you have questions, contact: **<mohsenfallahnjd@gmail.com>**
+If you have questions, contact: **<hi@themohsen.me>**
