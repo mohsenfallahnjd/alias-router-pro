@@ -1,6 +1,7 @@
 function qs(id) {
 	return document.getElementById(id);
 }
+
 const state = { aliases: [], editingId: null };
 
 function formToAlias() {
@@ -16,6 +17,7 @@ function formToAlias() {
 		disposition: qs("disposition").value,
 	};
 }
+
 function fillForm(a) {
 	qs("name").value = a.name || "";
 	qs("type").value = a.type || "tokens";
@@ -25,6 +27,7 @@ function fillForm(a) {
 	qs("disposition").value = a.disposition || "currentTab";
 	state.editingId = a.id;
 }
+
 function resetForm() {
 	qs("name").value = "";
 	qs("type").value = "tokens";
@@ -34,21 +37,24 @@ function resetForm() {
 	qs("disposition").value = "currentTab";
 	state.editingId = null;
 }
+
 function itemHtml(a) {
 	return `<div class="item" data-id="${a.id}">
-    <div>
-      <div><strong>${a.name || "(no name)"}</strong> [${a.type}]</div>
-      <div class="meta">${a.pattern} → ${a.template.split(/\\n/)[0]}</div>
-    </div>
-    <div class="actions">
-      <button class="edit">Edit</button>
-      <button class="toggle">${a.enabled ? "Disable" : "Enable"}</button>
-    </div>
-  </div>`;
+	  <div>
+		<div><strong>${a.name || "(no name)"}</strong> [${a.type}]</div>
+		<div class="meta">${a.pattern} → ${a.template.split(/\n/)[0]}</div>
+	  </div>
+	  <div class="actions">
+		<button class="edit">Edit</button>
+		<button class="toggle">${a.enabled ? "Disable" : "Enable"}</button>
+	  </div>
+	</div>`;
 }
+
 function renderList() {
 	qs("list").innerHTML = state.aliases.map(itemHtml).join("");
 }
+
 function loadSettings() {
 	return new Promise((resolve) => {
 		chrome.runtime.sendMessage({ type: "getSettings" }, (s) =>
@@ -56,6 +62,7 @@ function loadSettings() {
 		);
 	});
 }
+
 function saveAliases(aliases) {
 	return new Promise((resolve) => {
 		chrome.runtime.sendMessage({ type: "setSettings", data: { aliases } }, () =>
@@ -63,11 +70,13 @@ function saveAliases(aliases) {
 		);
 	});
 }
+
 async function init() {
 	const s = await loadSettings();
 	state.aliases = s.aliases || [];
 	renderList();
 }
+
 document.addEventListener("click", async (e) => {
 	const item = e.target.closest(".item");
 	if (item) {
@@ -83,6 +92,7 @@ document.addEventListener("click", async (e) => {
 		}
 	}
 });
+
 qs("save").addEventListener("click", async () => {
 	const a = formToAlias();
 	if (!a.pattern || !a.template) return alert("Pattern and Template required.");
@@ -93,7 +103,9 @@ qs("save").addEventListener("click", async () => {
 	resetForm();
 	renderList();
 });
+
 qs("reset").addEventListener("click", () => resetForm());
+
 qs("delete").addEventListener("click", async () => {
 	if (!state.editingId) return;
 	const idx = state.aliases.findIndex((x) => x.id === state.editingId);
@@ -104,25 +116,23 @@ qs("delete").addEventListener("click", async () => {
 		renderList();
 	}
 });
+
+// OPEN without "tabs" permission: always create new tabs
 qs("quickOpen").addEventListener("click", () => {
 	const text = qs("quickInput").value.trim();
 	if (!text) return;
+
 	chrome.runtime.sendMessage({ type: "resolve", text }, async (urls) => {
-		if (urls?.length) {
-			const [tab] = await chrome.tabs.query({
-				active: true,
-				currentWindow: true,
-			});
-			if (tab?.id) {
-				await chrome.tabs.update(tab.id, { url: urls[0] });
-				for (let i = 1; i < urls.length; i++)
-					chrome.tabs.create({ url: urls[i], active: false });
-			} else {
-				chrome.tabs.create({ url: urls[0] });
-				for (let i = 1; i < urls.length; i++)
-					chrome.tabs.create({ url: urls[i], active: false });
-			}
+		if (!urls || !urls.length) return;
+
+		// first URL in foreground
+		await chrome.tabs.create({ url: urls[0], active: true });
+
+		// remaining in background
+		for (let i = 1; i < urls.length; i++) {
+			chrome.tabs.create({ url: urls[i], active: false });
 		}
 	});
 });
+
 init();

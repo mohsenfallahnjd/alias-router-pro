@@ -187,18 +187,13 @@ chrome.omnibox.onInputChanged.addListener(async (text, suggest) => {
 
 chrome.omnibox.onInputEntered.addListener(async (text, disposition) => {
 	const urls = await resolveAllUrls(text);
-	const openDisp = await getDispositionForInput(text);
-	if (!urls || urls.length === 0) return;
+	if (!urls || !urls.length) return;
 
-	// open first according to disposition, others in background
-	const openOne = (u, disp) => {
-		if (disp === "currentTab") chrome.tabs.update({ url: u });
-		else if (disp === "newForegroundTab") chrome.tabs.create({ url: u });
-		else if (disp === "newBackgroundTab")
-			chrome.tabs.create({ url: u, active: false });
-		else chrome.tabs.update({ url: u });
-	};
-	openOne(urls[0], openDisp);
+	// Always open a new tab for the first URL
+	const foreground = disposition !== "newBackgroundTab";
+	await chrome.tabs.create({ url: urls[0], active: foreground });
+
+	// Open additional URLs in background tabs
 	for (let i = 1; i < urls.length; i++) {
 		chrome.tabs.create({ url: urls[i], active: false });
 	}

@@ -9,7 +9,7 @@
 		"default_popup": "popup.html"
 	},
 	"options_page": "options.html",
-	"permissions": ["storage", "tabs", "contextMenus", "omnibox"],
+	"permissions": ["storage", "contextMenus", "omnibox"],
 	"host_permissions": ["<all_urls>"],
 	"background": { "service_worker": "service_worker.js", "type": "module" },
 	"icons": {
